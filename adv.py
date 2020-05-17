@@ -4,6 +4,7 @@ from world import World
 
 import random
 from ast import literal_eval
+from util import Queue
 
 # Load world
 world = World()
@@ -28,7 +29,28 @@ player = Player(world.starting_room)
 # Fill this out with directions to walk
 # traversal_path = ['n', 'n']
 traversal_path = []
+# reverse direction
+reverse_path = []
+# dict for room ref
+rooms = {}
+reverse_direction = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
 
+# # start in room 0 and return exits
+# rooms[0] = player.current_room.get_exits()
+
+# # while there are unvisited rooms
+#     # if the room the player is in is not in rooms dict:
+#         # get exits and add to rooms
+#         # define previous room reverse_path[-1]
+#         # remove previous room from rooms
+        
+#     # while rooms dict is empty:
+#         # pop last from reverse_path
+#         # add to traversal_path
+#         # player travels in reverse
+
+
+        
 
 
 # TRAVERSAL TEST - DO NOT MODIFY
@@ -51,12 +73,12 @@ else:
 #######
 # UNCOMMENT TO WALK AROUND
 #######
-player.current_room.print_room_description(player)
-while True:
-    cmds = input("-> ").lower().split(" ")
-    if cmds[0] in ["n", "s", "e", "w"]:
-        player.travel(cmds[0], True)
-    elif cmds[0] == "q":
-        break
-    else:
-        print("I did not understand that command.")
+# player.current_room.print_room_description(player)
+# while True:
+#     cmds = input("-> ").lower().split(" ")
+#     if cmds[0] in ["n", "s", "e", "w"]:
+#         player.travel(cmds[0], True)
+#     elif cmds[0] == "q":
+#         break
+#     else:
+#         print("I did not understand that command.")
