@@ -18,7 +18,7 @@ world = World()
 map_file = "maps/main_maze.txt"
 
 # Loads the map into a dictionary
-room_graph=literal_eval(open(map_file, "r").read())
+room_graph = literal_eval(open(map_file, "r").read())
 world.load_graph(room_graph)
 
 # Print an ASCII map
@@ -33,26 +33,39 @@ traversal_path = []
 reverse_path = []
 # dict for room ref
 rooms = {}
-reverse_direction = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
+reverse_direction = {'n': 's', 's': 'n', 'e': 'w', 'w': 'e'}
 
 # # start in room 0 and return exits
-# rooms[0] = player.current_room.get_exits()
+rooms[0] = player.current_room.get_exits()
 
 # # while there are unvisited rooms
-#     # if the room the player is in is not in rooms dict:
-#         # get exits and add to rooms
-#         # define previous room reverse_path[-1]
-#         # remove previous room from rooms
-        
-#     # while rooms dict is empty:
-#         # pop last from reverse_path
-#         # add to traversal_path
-#         # player travels in reverse
+while len(rooms) < len(room_graph) - 1:
+    # if the room the player is in is not in rooms dict:
+    if player.current_room.id not in rooms:
+        # get exits and add to rooms
+        rooms[player.current_room.id] = player.current_room.get_exits()
+        # define previous room reverse_path[-1]
+        previous_room = reverse_path[-1]
+        # remove previous room from rooms
+        rooms[player.current_room.id].remove(previous_room)
 
-# find exit direction from last entry in rooms dict
-# add exit direction to traversal_path
-# add reverse_direction to reverse path
-        
+    # while rooms dict is empty:
+    while len(rooms[player.current_room.id]) < 1:
+        # pop last from reverse_path
+        reverse = reverse_path.pop()
+        # add to traversal_path
+        traversal_path.append(reverse)
+        # player travels in reverse
+        player.travel(reverse)
+
+    # find exit direction from last entry in rooms dict
+    exit_direction = rooms[player.current_room.id].pop(0)
+    # add exit direction to traversal_path
+    traversal_path.append(exit_direction)
+    # add reverse_direction to reverse path
+    reverse_path.append(reverse_direction[exit_direction])
+    # player travels in reverse
+    player.travel(exit_direction)
 
 
 # TRAVERSAL TEST - DO NOT MODIFY
@@ -65,11 +78,11 @@ for move in traversal_path:
     visited_rooms.add(player.current_room)
 
 if len(visited_rooms) == len(room_graph):
-    print(f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
+    print(
+        f"TESTS PASSED: {len(traversal_path)} moves, {len(visited_rooms)} rooms visited")
 else:
     print("TESTS FAILED: INCOMPLETE TRAVERSAL")
     print(f"{len(room_graph) - len(visited_rooms)} unvisited rooms")
-
 
 
 #######
