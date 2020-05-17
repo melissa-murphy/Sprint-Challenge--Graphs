@@ -49,7 +49,9 @@ reverse_direction = {'n':'s', 's':'n', 'e':'w', 'w':'e'}
 #         # add to traversal_path
 #         # player travels in reverse
 
-
+# find exit direction from last entry in rooms dict
+# add exit direction to traversal_path
+# add reverse_direction to reverse path
         
 
 
